@@ -4,6 +4,11 @@ console.log(args);
 const allowedInput = ["Rock", "Paper", "Scissors"];
 let playerChoice = process.argv[2];
 
+if (playerChoice) {
+  playerChoice =
+    playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1).toLowerCase();
+}
+
 if (!allowedInput.includes(playerChoice)) {
   console.log(
     "Wrong input! You can only answer with: rock, paper or scissors!"
