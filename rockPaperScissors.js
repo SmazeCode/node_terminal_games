@@ -1,5 +1,4 @@
 const args = process.argv.slice(2);
-console.log(args);
 
 const allowedInput = ["Rock", "Paper", "Scissors"];
 let playerChoice = process.argv[2];
