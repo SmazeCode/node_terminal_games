@@ -1,56 +1,52 @@
 const args = process.argv.slice(2);
 
-let sentence = args.join(" ");
+let playerChoice = args.join(" ");
 
-if (sentence) {
-  if (/[^a-zA-Z\s]/.test(sentence)) {
-    console.error("Error: Numbers and special characters are not allowed.");
-    process.exit(1);
-  }
+if (playerChoice) {
+  const words = playerChoice.match(/[a-zA-Z]+|[^a-zA-Z]+/g);
 
-  const words = sentence.split(" ");
-  let newWords = [];
+  let translatedWords = [];
 
   for (let i = 0; i < words.length; i++) {
     let word = words[i];
-    let newWord = "";
+    let translatedCurrentWord = "";
 
-    if (word === "") {
-      newWords.push("");
-      continue;
-    }
+    if (/[a-zA-Z]+/.test(word)) {
+      let firstLetterLowerCase = word.charAt(0).toLowerCase();
+      let secondLetterLowerCase = word.charAt(1).toLowerCase();
 
-    let firstLetterLowerCase = word.charAt(0).toLowerCase();
-    let secondLetterLowerCase = word.charAt(1)
-      ? word.charAt(1).toLowerCase()
-      : "";
-    const vowels = ["a", "e", "i", "o", "u"];
+      const vowels = ["a", "e", "i", "o", "u"];
 
-    if (vowels.includes(firstLetterLowerCase)) {
-      newWord = word + "way";
-    } else if (
-      !vowels.includes(firstLetterLowerCase) &&
-      secondLetterLowerCase &&
-      !vowels.includes(secondLetterLowerCase)
-    ) {
-      const secondRuleFirstTwoLetters = word.slice(0, 2);
-      const secondRuleRemainingLetters = word.slice(2);
-      newWord = secondRuleRemainingLetters + secondRuleFirstTwoLetters + "ay";
-    } else if (
-      !vowels.includes(firstLetterLowerCase) &&
-      vowels.includes(secondLetterLowerCase)
-    ) {
-      const thirdRuleFirstLetter = word.slice(0, 1);
-      const thirdRuleRemainingLetter = word.slice(1);
-      newWord = thirdRuleRemainingLetter + thirdRuleFirstLetter + "ay";
+      if (vowels.includes(firstLetterLowerCase)) {
+        translatedCurrentWord = word + "way";
+      } else if (
+        !vowels.includes(firstLetterLowerCase) &&
+        secondLetterLowerCase &&
+        !vowels.includes(secondLetterLowerCase)
+      ) {
+        const secondRuleFirstTwoLetters = word.slice(0, 2);
+        const secondRuleRemainingLetters = word.slice(2);
+        translatedCurrentWord =
+          secondRuleRemainingLetters + secondRuleFirstTwoLetters + "ay";
+      } else if (
+        !vowels.includes(firstLetterLowerCase) &&
+        vowels.includes(secondLetterLowerCase)
+      ) {
+        const thirdRuleFirstLetter = word.slice(0, 1);
+        const thirdRuleRemainingLetter = word.slice(1);
+        translatedCurrentWord =
+          thirdRuleRemainingLetter + thirdRuleFirstLetter + "ay";
+      } else {
+        translatedCurrentWord = word + "ay";
+      }
+      translatedWords.push(translatedCurrentWord);
     } else {
-      newWord = word + "ay";
+      translatedWords.push(word);
     }
-    newWords.push(newWord);
   }
-  console.log(newWords.join(" "));
+  console.log(translatedWords.join(""));
 } else {
   console.log(
-    "Please provide an argument. Example: node pigLatin.js Hello world"
+    "Please provide an argument. Example: node pigLatin.js Hello World"
   );
 }
